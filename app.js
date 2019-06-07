@@ -44,21 +44,192 @@ const app = new Vue({
 		search:function() {
 
 
-
+       //     https://chroniclingamerica.loc.gov/search/titles/results/?terms=michigan&format=json&page=5
             const proxyurl = "https://cors-anywhere.herokuapp.com/";
-            const url = `https://itunes.apple.com/search?term=${encodeURIComponent(this.term)}&limit=10&media=music`;
+        const url = `https://itunes.apple.com/search?term=${encodeURIComponent(this.term)}&limit=100`;
+
             fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
             .then(res => res.json())
 			.then(res => {
 				this.searching = false;
 				this.results = res.results;
-				this.noResults = this.results.length === 0
-            .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
+			//	this.noResults = this.results.length === 0
+          //  .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
 
 			});
 		}
 	}
 });
+
+
+
+
+
+const app1 = new Vue({
+    el:'#app1',
+    data:{
+      term:'',
+      posts:[],
+      post: '',
+      noResults:false,
+      searching:false
+    },
+    methods:{
+      search: function() {
+        const url = `http://jsonplaceholder.typicode.com/posts/` + this.term ;
+         fetch(url)
+          .then(res => res.json())
+
+          .then(posts => this.posts = posts)
+          .then(console.log(url))
+        }
+
+    }
+
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const appJson = new Vue({
+    el:'#appJson',
+    data:{
+		term:'',
+		posts:[],
+		noResults:false,
+		searching:false
+	},
+    methods:{
+		search:function() {
+        const url = `http://jsonplaceholder.typicode.com/posts/${encodeURIComponent(this.term)}` ;
+            fetch(url)
+            .then(res => res.json())
+			.then(res => {this.posts = res.posts;})
+        }
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+const app1 = new Vue({
+    el:'#app1',
+    data:{
+
+        posts: []
+      }
+    ,
+    created() {
+      axios.get('http://jsonplaceholder.typicode.com/posts').then((response) => {
+        this.posts = response.data
+      })
+      .catch((e) => {
+        console.error(e)
+      })
+    }
+  });
+
+
+
+const app1 = new Vue({
+	el:'#app1',
+	data:{
+		term:'',
+        results:[],
+		noResults:false,
+		searching:false
+	},
+	methods:{
+		search:function() {
+
+
+       //     https://chroniclingamerica.loc.gov/search/titles/results/?terms=michigan&format=json&page=5
+            const proxyurl = "https://cors-anywhere.herokuapp.com/";
+        const url = `https://jsonplaceholder.typicode.com/posts?userId=${encodeURIComponent(this.term)}`;
+
+            fetch(proxyurl + url) // https://cors-anywhere.herokuapp.com/https://example.com
+            .then(res => res.json())
+			.then(res => {
+				this.searching = false;
+				this.results = res.results;
+		//		this.noResults = this.results.length === 0
+       //     .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
+
+
+			});
+		}
+	}
+});
+
+
+
+
+
+new Vue({
+    el: '#app1',
+    data:{
+		term:'',
+		results:[],
+		noResults:false,
+		searching:false
+	},
+    data () {
+
+      return {
+        info: null
+      }
+    },
+    mounted () { //Fires on page load instantly
+
+      axios
+        .get('https://jsonplaceholder.typicode.com/posts')
+        .then(response => (this.info = response.data))
+    }
+
+  })
+
+*/
+
+
+
 
 
 
@@ -83,8 +254,8 @@ const app2 = new Vue({
 			.then(res => {
 				this.searching = false;
 				this.results = res.results;
-				this.noResults = this.results.length === 0
-            .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
+			//	this.noResults = this.results.length === 0
+          //  .catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
 
 			});
 		}
@@ -96,33 +267,6 @@ const app2 = new Vue({
 
 
 
-new Vue({
-    el: '#app1',
-    data () {
-      return {
-        info: null,
-        loading: true,
-        errored: false
-      }
-    },
-    filters: {
-      currencydecimal (value) {
-        return value.toFixed(2)
-      }
-    },
-    mounted () {
-      axios
 
-      const proxyurl = "https://cors-anywhere.herokuapp.com/";
-      const url = `https://api.coindesk.com/v1/bpi/currentprice.json`;
-      fetch(proxyurl + url)
-        .then(response => {
-          this.info = response.data.bpi
-        })
-        .catch(error => {
-          console.log(error)
-          this.errored = true
-        })
-        .finally(() => this.loading = false)
-    }
-  })
+
+
